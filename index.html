@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#193574"><meta name="description" content="Cabides, manequins e bustos para valorizar cada peça da sua loja. Explore o catálogo Luganas Cabides e monte seu orçamento.">
+  <title>Luganas Cabides | Cada peça merece destaque</title>
+  <link rel="icon" href="assets/logo.png"><link rel="stylesheet" href="styles.css?v=20261026-24">
+  <script src="app.js?v=20261026-24" defer></script>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header"><div class="container header-main">
+
+    <a class="brand" href="#inicio" aria-label="Luganas Cabides — início"><img src="assets/logo.png" alt="Luganas Cabides" width="122" height="122"></a>
+    <form class="search" role="search" id="search-form">
+      <span data-icon="search"></span>
+      <label class="sr-only" for="search">Buscar produtos para sua loja</label>
+      <input type="search" id="search" placeholder="Buscar cabides, manequins, bustos..." autocomplete="off">
+      <button class="search-action-btn" type="submit" id="search-action-btn" aria-label="Buscar produtos">
+        <span data-icon="sliders"></span>
+      </button>
+    </form>
+    <div class="header-actions"><button class="header-action" id="quote-link" aria-label="Abrir orçamento"><span class="icon-wrap"><span data-icon="bag"></span><b class="count" id="quote-count" hidden>0</b></span><span class="action-label">Orçamento</span></button></div>
+  </div></header>
+  <main id="conteudo" class="container">
+    <div id="home-content">
+      <!-- Banner Hero com Texto Direto sobre o Banner -->
+      <section class="hero reveal-on-scroll" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">LUGANAS CABIDES • EXCLUSIVIDADE</p>
+          <h1 id="hero-title">Cada peça<br>merece destaque.</h1>
+          <p>Cabides, manequins e bustos com acabamento nobre para valorizar o ambiente e as peças da sua loja.</p>
+          <div class="hero-actions">
+            <a class="button" href="#catalogo">Ver catálogo</a>
+            <a class="outline-button" href="#catalogo/personalizados">Personalizados</a>
+          </div>
+        </div>
+        <div class="hero-art">
+          <img src="assets/hero.png" alt="Cabide de madeira, manequim branco e busto de linho para exposição em lojas" fetchpriority="high" width="1024" height="341">
+        </div>
+      </section>
+
+      <!-- Bolhas circulares de categorias abaixo do banner preenchendo toda a largura -->
+      <section class="home-stories-section reveal-on-scroll" aria-label="Categorias em destaque">
+        <div class="home-categories-bar" id="home-categories-bar"></div>
+      </section>
+    </div>
+    <section class="catalog-section reveal-on-scroll" aria-labelledby="catalog-title"><div class="section-heading catalog-heading"><div><p class="eyebrow" id="catalog-eyebrow" hidden>ENCONTRE O QUE SUA LOJA PRECISA</p><h2 id="catalog-title" tabindex="-1">Destaques para sua loja</h2><p class="muted" id="results-label" role="status" aria-live="polite" hidden></p></div><a class="text-link" id="view-all" href="#catalogo">Ver todos</a></div>
+      <div class="catalog-hub" id="catalog-tools" hidden>
+        <div class="hub-unified-bar">
+          <div class="hub-categories-scroll" id="filter-chips" role="group" aria-label="Categorias de produtos"></div>
+          <div class="hub-filters-bar">
+            <label class="hub-filter-field" for="material">
+              <span class="hub-filter-label">Material</span>
+              <span class="select-shell">
+                <select id="material">
+                  <option value="Todos">Todos os materiais</option>
+                  <option>Madeira</option>
+                  <option>Veludo</option>
+                  <option>Polietileno</option>
+                  <option>Linho</option>
+                </select>
+                <span data-icon="chevron"></span>
+              </span>
+            </label>
+            <label class="hub-filter-field" for="sort">
+              <span class="hub-filter-label">Ordenar por</span>
+              <span class="select-shell">
+                <select id="sort">
+                  <option value="featured">Destaques</option>
+                  <option value="az">Nome: A–Z</option>
+                  <option value="za">Nome: Z–A</option>
+                </select>
+                <span data-icon="chevron"></span>
+              </span>
+            </label>
+            <button class="clear-filter-button" id="clear-filters" hidden><span data-icon="close"></span> Limpar</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-grid" id="product-grid"></div><div class="empty-state" id="empty-state" hidden><span data-icon="search"></span><h3 id="empty-title">Nenhum produto encontrado</h3><p id="empty-copy">Experimente outro termo ou limpe os filtros.</p><button class="button" id="empty-reset">Explorar catálogo</button></div>
+    </section>
+    <section class="promos" id="promos"><div class="promo peach reveal-on-scroll"><div class="promo-copy"><h2>Sua marca em<br>cada detalhe.</h2><p>Conheça as opções de<br>cabides personalizados.</p><a class="button small" href="#catalogo/personalizados">Personalizar</a></div></div><div class="promo help reveal-on-scroll"><span class="help-icon" data-icon="chat"></span><div><h2>Precisa de ajuda<br>para escolher?</h2><p>Vamos encontrar a opção para a sua loja.</p><a class="outline-button" href="https://www.instagram.com/luganascabides/" target="_blank" rel="noopener">Fale com a Luganas</a></div></div></section>
+  </main>
+  <footer class="site-footer reveal-on-scroll"><div class="container footer-main"><a href="#inicio" aria-label="Voltar ao início"><img src="assets/logo.png" alt="Luganas Cabides" width="84" height="84" loading="lazy"></a><p>Cabides <span>•</span> Manequins <span>•</span> Bustos</p><a href="https://www.instagram.com/luganascabides/" target="_blank" rel="noopener"><span data-icon="instagram"></span> @luganascabides</a></div><div class="container footer-note">Prévia de apresentação. Imagens ilustrativas; modelos, materiais e disponibilidade sujeitos à confirmação.</div></footer>
+  <dialog id="product-dialog" class="product-dialog" aria-labelledby="detail-name"><div class="dialog-top"><span class="eyebrow">CONHEÇA O PRODUTO</span><button class="icon-btn close-dialog" aria-label="Fechar detalhes" data-icon="close"></button></div><div id="product-detail"></div></dialog>
+  <dialog id="quote-dialog" class="quote-dialog" aria-labelledby="quote-title"><div class="dialog-top"><div><p class="eyebrow">DO SEU JEITO</p><h2 id="quote-title">Seu orçamento</h2></div><button class="icon-btn close-dialog" aria-label="Fechar orçamento" data-icon="close"></button></div><p class="muted quote-intro">Reúna seus produtos e quantidades para consultar a Luganas.</p><div id="quote-items"></div><div id="quote-bottom" hidden><label class="notes-label" for="quote-notes">Quer personalizar ou tem alguma observação?</label><textarea id="quote-notes" maxlength="1500" rows="3" placeholder="Ex.: aplicar minha marca nos cabides... (opcional)"></textarea><button class="button make-order-btn" id="make-order"><span data-icon="whatsapp"></span> Fazer pedido</button><p class="quote-hint">Você será direcionado para o WhatsApp com seu pedido pronto para envio.</p></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body></html>

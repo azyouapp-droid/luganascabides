@@ -1,0 +1,19 @@
+VERIFICAÇÃO DA VERSÃO DE APRESENTAÇÃO
+
+Conferido no navegador por servidor local:
+• Carregamento do logotipo, banner e fotos locais.
+• Busca por “veludo” e retorno de produto correspondente.
+• Categoria, material e ordem alfabética.
+• Estado sem resultados e retorno ao catálogo.
+• Detalhes, opção de produto e quantidade.
+• Inclusão no orçamento e alteração de quantidade.
+• Observações incluídas na lista.
+• Cópia do orçamento e download real do TXT.
+• Medições sem rolagem horizontal em larguras de 320, 375, 768, 1024 e 1440 pixels.
+• Duas colunas de produtos no celular e quatro no desktop.
+• Menu inferior ausente no celular.
+• Validação de sintaxe do JavaScript.
+
+O navegador de verificação permite HTTP/HTTPS e não permite abrir o protocolo file://.
+A abertura direta do HTML foi preparada sem módulos, bibliotecas remotas ou consultas de rede, mas não pôde ser automatizada neste navegador.
+Não houve teste em aparelhos físicos nem publicação online.
