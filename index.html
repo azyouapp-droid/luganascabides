@@ -4,8 +4,8 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#193574"><meta name="description" content="Cabides, manequins e bustos para valorizar cada peça da sua loja. Explore o catálogo Luganas Cabides e monte seu orçamento.">
   <title>Luganas Cabides | Cada peça merece destaque</title>
-  <link rel="icon" href="assets/logo.png"><link rel="stylesheet" href="styles.css?v=20261026-24">
-  <script src="app.js?v=20261026-24" defer></script>
+  <link rel="icon" href="assets/logo.png"><link rel="stylesheet" href="styles.css?v=20261028-flex-3">
+  <script src="app.js?v=20261028-flex-3" defer></script>
 </head>
 <body>
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
@@ -63,12 +63,12 @@
                 <span data-icon="chevron"></span>
               </span>
             </label>
-            <label class="hub-filter-field" for="sort">
+            <label class="hub-filter-field" id="size-filter-field" for="size-filter" hidden><span class="hub-filter-label">Tamanho</span><span class="select-shell"><select id="size-filter"><option value="Todos">Todos os tamanhos</option><option>RN até 1 ano</option><option>2 anos</option><option>4 anos</option><option>6 anos</option><option>8 anos</option><option>10 anos</option><option>12 anos</option><option>14 anos</option></select><span data-icon="chevron"></span></span></label><label class="hub-filter-field" for="sort">
               <span class="hub-filter-label">Ordenar por</span>
               <span class="select-shell">
                 <select id="sort">
                   <option value="featured">Destaques</option>
-                  <option value="az">Nome: A–Z</option>
+                  <option value="price">Menor preço</option><option value="az">Nome: A–Z</option>
                   <option value="za">Nome: Z–A</option>
                 </select>
                 <span data-icon="chevron"></span>
@@ -78,12 +78,15 @@
           </div>
         </div>
       </div>
-      <div class="product-grid" id="product-grid"></div><div class="empty-state" id="empty-state" hidden><span data-icon="search"></span><h3 id="empty-title">Nenhum produto encontrado</h3><p id="empty-copy">Experimente outro termo ou limpe os filtros.</p><button class="button" id="empty-reset">Explorar catálogo</button></div>
+      <nav id="flex-breadcrumb" class="flex-breadcrumb" aria-label="Você está em" hidden><a href="#catalogo">Catálogo</a><span>/</span><a href="#catalogo/bustos">Bustos</a><span>/</span><strong>Flex Kids</strong></nav>
+<section id="line-showcase" class="line-showcase" aria-label="Linhas de bustos" hidden><a class="flex-banner" href="#catalogo/bustos/flex-kids"><img class="flex-banner-art" src="assets/products/flex-kids-banner-v2.png" alt="" width="2170" height="725"><div class="flex-banner-copy"><h3>Flex Kids</h3><p>Bustos infantis para sua vitrine.</p><span class="button">Ver tamanhos <span aria-hidden="true">→</span></span></div></a></section>
+<div id="line-context" hidden></div>
+<div class="product-grid" id="product-grid"></div><div class="empty-state" id="empty-state" hidden><span data-icon="search"></span><h3 id="empty-title">Nenhum produto encontrado</h3><p id="empty-copy">Experimente outro termo ou limpe os filtros.</p><button class="button" id="empty-reset">Explorar catálogo</button></div>
     </section>
     <section class="promos" id="promos"><div class="promo peach reveal-on-scroll"><div class="promo-copy"><h2>Sua marca em<br>cada detalhe.</h2><p>Conheça as opções de<br>cabides personalizados.</p><a class="button small" href="#catalogo/personalizados">Personalizar</a></div></div><div class="promo help reveal-on-scroll"><span class="help-icon" data-icon="chat"></span><div><h2>Precisa de ajuda<br>para escolher?</h2><p>Vamos encontrar a opção para a sua loja.</p><a class="outline-button" href="https://www.instagram.com/luganascabides/" target="_blank" rel="noopener">Fale com a Luganas</a></div></div></section>
   </main>
   <footer class="site-footer reveal-on-scroll"><div class="container footer-main"><a href="#inicio" aria-label="Voltar ao início"><img src="assets/logo.png" alt="Luganas Cabides" width="84" height="84" loading="lazy"></a><p>Cabides <span>•</span> Manequins <span>•</span> Bustos</p><a href="https://www.instagram.com/luganascabides/" target="_blank" rel="noopener"><span data-icon="instagram"></span> @luganascabides</a></div><div class="container footer-note">Prévia de apresentação. Imagens ilustrativas; modelos, materiais e disponibilidade sujeitos à confirmação.</div></footer>
   <dialog id="product-dialog" class="product-dialog" aria-labelledby="detail-name"><div class="dialog-top"><span class="eyebrow">CONHEÇA O PRODUTO</span><button class="icon-btn close-dialog" aria-label="Fechar detalhes" data-icon="close"></button></div><div id="product-detail"></div></dialog>
-  <dialog id="quote-dialog" class="quote-dialog" aria-labelledby="quote-title"><div class="dialog-top"><div><p class="eyebrow">DO SEU JEITO</p><h2 id="quote-title">Seu orçamento</h2></div><button class="icon-btn close-dialog" aria-label="Fechar orçamento" data-icon="close"></button></div><p class="muted quote-intro">Reúna seus produtos e quantidades para consultar a Luganas.</p><div id="quote-items"></div><div id="quote-bottom" hidden><label class="notes-label" for="quote-notes">Quer personalizar ou tem alguma observação?</label><textarea id="quote-notes" maxlength="1500" rows="3" placeholder="Ex.: aplicar minha marca nos cabides... (opcional)"></textarea><button class="button make-order-btn" id="make-order"><span data-icon="whatsapp"></span> Fazer pedido</button><p class="quote-hint">Você será direcionado para o WhatsApp com seu pedido pronto para envio.</p></div></dialog>
+  <dialog id="quote-dialog" class="quote-dialog" aria-labelledby="quote-title"><div class="dialog-top"><div><p class="eyebrow">DO SEU JEITO</p><h2 id="quote-title">Seu orçamento</h2></div><button class="icon-btn close-dialog" aria-label="Fechar orçamento" data-icon="close"></button></div><p class="muted quote-intro">Reúna seus produtos e quantidades para consultar a Luganas.</p><div id="quote-items"></div><div id="quote-bottom" hidden><div id="quote-subtotal" class="quote-subtotal" hidden></div><a class="text-link" id="quote-more-flex" href="#catalogo/bustos/flex-kids">Adicionar outro tamanho →</a><label class="notes-label" for="quote-notes">Quer personalizar ou tem alguma observação?</label><textarea id="quote-notes" maxlength="1500" rows="3" placeholder="Ex.: aplicar minha marca nos cabides... (opcional)"></textarea><button class="button make-order-btn" id="make-order"><span data-icon="whatsapp"></span> Fazer pedido</button><p class="quote-hint">Você será direcionado para o WhatsApp com seu pedido pronto para envio.</p></div></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 </body></html>

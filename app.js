@@ -6,7 +6,11 @@ const $=s=>document.querySelector(s);
 const paintIcons=(root=document)=>root.querySelectorAll('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const normalize=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const heads=['Mika','Paula','Lara','Eduarda','Natália','Ana','Luana','Lívia','Luiza','Clara','Bruna','Camila','Pedro','Caio','Gabriel','Daniel','Jonathan','Pablo','Rafael','Samuel','Bia','Sofia','João','Juliana','Xuxa','Vick'];
+const flexSizes=[['rn','RN até 1 ano',572],['2','2 anos',609.60],['4','4 anos',639.20],['6','6 anos',676],['8','8 anos',719.60],['10','10 anos',761.20],['12','12 anos',884],['14','14 anos',906.80]];
+const money=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const products=[
+ ...flexSizes.map(([id,size,price])=>({id:'flex-kids-'+id,name:size.toLocaleUpperCase('pt-BR'),size,price,category:'Bustos',line:'flex-kids',material:'Malha crua',img:'assets/products/flex-kids-real.png',note:'Cabeça removível • braços articuláveis',options:heads,description:'Estrutura em aço carbono galvanizado, espuma de poliuretano flexível de alta densidade e forração em malha crua ribana. Cabeça removível, braços com ângulo de 360° e base cromada.'})),
  {id:'madeira',name:'Cabide de madeira',category:'Cabides',material:'Madeira',img:'assets/products/cabide-madeira.png',note:'Acabamento natural',options:['Natural','Personalizado com sua marca'],description:'Uma apresentação clássica para suas peças. Consulte os modelos, acabamentos e as opções de personalização disponíveis.',fresh:true},
  {id:'manequim',name:'Manequim feminino',category:'Manequins',material:'Polietileno',img:'assets/products/manequim-feminino.png',note:'Exposição em vitrine',options:['Branco','Consultar outros modelos'],description:'Para compor vitrines e destacar combinações. Consulte medidas, posições e acabamentos com a equipe Luganas.'},
  {id:'busto',name:'Busto de linho',category:'Bustos',material:'Linho',img:'assets/products/busto-linho.png',note:'Visual leve e natural',options:['Linho natural','Consultar outros modelos'],description:'Uma proposta versátil para a exposição de peças. Consulte as opções de bustos, bases e revestimentos disponíveis.'},
@@ -18,7 +22,8 @@ const products=[
 function load(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}}
 let quote=load('luganas-quote',[]);if(!Array.isArray(quote))quote=[];quote=quote.filter(q=>products.some(p=>p.id===q.id)&&products.find(p=>p.id===q.id).options.includes(q.option)&&Number.isInteger(q.qty)&&q.qty>0&&q.qty<=9999);
 let notes=load('luganas-notes','');if(typeof notes!=='string')notes='';notes=notes.slice(0,1500);
-let view='home',category='Todos',material='Todos',sort='featured',query='',detailProduct=null,toastTimer;
+let view='home',category='Todos',material='Todos',sort='featured',query='',detailProduct=null,toastTimer,line='',sizeFilter='Todos',editingItem=null;
+const headPhoto=(name,cls='')=>{const i=heads.indexOf(name);return `<span class="head-photo ${cls}" role="img" aria-label="Cabeça ${escape(name)}" style="--head-x:${[28,130,232,334,436][i%5]};--head-y:${[115,252,389,526,665,805][Math.floor(i/5)]}"></span>`};
 const photo=(p,cls='')=>`<div class="product-photo ${cls}" role="img" aria-label="${escape(p.name)}"><img src="${p.img}" alt="${escape(p.name)}" class="product-img" loading="lazy" decoding="async"></div>`;
 const find=id=>products.find(p=>p.id===id);
 function persist(){try{localStorage.setItem('luganas-quote',JSON.stringify(quote));localStorage.setItem('luganas-notes',JSON.stringify(notes))}catch{}updateCounts()}
@@ -45,18 +50,31 @@ function renderHomeCategories(){
 }
 function render(){
  document.body.classList.toggle('route-catalog',view==='catalog');
- $('#home-content').hidden=view!=='home';$('#promos').hidden=false;$('#catalog-tools').hidden=view!=='catalog';$('#view-all').hidden=view!=='home';$('#catalog-eyebrow').hidden=view!=='catalog';$('#results-label').hidden=view==='home';
+ $('#home-content').hidden=view!=='home';$('#promos').hidden=view!=='home';$('#catalog-tools').hidden=view!=='catalog';$('#view-all').hidden=view!=='home';$('#catalog-eyebrow').hidden=view!=='catalog';$('#results-label').hidden=view==='home';
  $('#catalog-title').textContent=view==='home'?'Destaques para sua loja':category==='Todos'?'Explore o catálogo':category;
  if(view==='home')renderHomeCategories();
  const catItems=[{name:'Todos',id:null},...catData.map(([c,id])=>({name:c,id}))];
  $('#filter-chips').innerHTML=catItems.map(c=>`<button class="cat-pill-card" data-filter="${c.name}" aria-pressed="${category===c.name}"><div class="cat-squircle">${c.id?photo(find(c.id),'cat-squircle-photo'):`<div class="cat-all-icon">${icon('grid')}</div>`}</div><span class="cat-label">${c.name}</span></button>`).join('');
+ const materials=[...new Set(products.filter(p=>category==='Todos'||p.category===category).map(p=>p.material))];
+ if(!materials.includes(material))material='Todos';
+ $('#material').innerHTML='<option value="Todos">Todos os materiais</option>'+materials.map(m=>'<option>'+escape(m)+'</option>').join('');
+ $('#material').closest('label').hidden=!!line;
+ $('#size-filter-field').hidden=line!=='flex-kids';$('#size-filter').value=sizeFilter;
  $('#material').value=material;$('#sort').value=sort;
- $('#clear-filters').hidden=(category==='Todos' && material==='Todos' && !query);
+ $('#line-showcase').hidden=!(view==='catalog'&&category==='Bustos'&&!line&&!query&&material==='Todos');
+ $('#line-context').hidden=true;
+ document.body.classList.toggle('is-flex-line',line==='flex-kids');
+ $('#catalog-title').textContent=line==='flex-kids'?'Flex Kids':$('#catalog-title').textContent;
+ $('#flex-breadcrumb').hidden=line!=='flex-kids';
+ $('#clear-filters').hidden=(category==='Todos' && material==='Todos' && !query && sizeFilter==='Todos');
  document.body.classList.toggle('is-searching',Boolean(query));
- let list=products.filter(p=>(category==='Todos'||p.category===category)&&(material==='Todos'||p.material===material)&&(!query||normalize(`${p.name} ${p.category} ${p.material} ${p.note}`).includes(normalize(query))));
+ let list=products.filter(p=>(category==='Todos'||p.category===category)&&(material==='Todos'||p.material===material)&&(!line||p.line===line)&&(sizeFilter==='Todos'||p.size===sizeFilter)&&(!query||normalize(`${p.name} ${p.line?.replaceAll('-',' ')||''} ${p.category} ${p.material} ${p.note}`).includes(normalize(query))));
+ if(category==='Bustos'&&!line&&!query&&material==='Todos')list=list.filter(p=>!p.line);
  if(sort==='az')list.sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));if(sort==='za')list.sort((a,b)=>b.name.localeCompare(a.name,'pt-BR'));
- if(view==='home')list=list.slice(0,4);
+ if(view==='home')list=list.filter(p=>!p.line).slice(0,4);
+ if(sort==='price')list.sort((a,b)=>(a.price??Infinity)-(b.price??Infinity));
  $('#results-label').textContent=`${list.length} produto${list.length===1?'':'s'}${query?' para “'+query+'”':''}`;
+ if(!$('#line-showcase').hidden)$('#results-label').textContent=`1 linha · ${list.length} outro${list.length===1?'':'s'} produto${list.length===1?'':'s'}`;
  $('#product-grid').classList.toggle('is-home-grid',view==='home');
  
  if(view==='home'){
@@ -66,7 +84,7 @@ function render(){
    const grad=catGradients[p.category]||'linear-gradient(150deg, #fae4d5 0%, #faece2 100%)';
    return `<article class="glass-product-card" style="--card-gradient: ${grad}">
      <div class="glass-card-top">
-       <span class="glass-cat-badge">${escape(p.category)}</span>
+       
        ${p.fresh?'<span class="glass-new-badge">Novo</span>':''}
      </div>
      <button class="glass-photo-btn" data-detail="${p.id}" aria-label="Ver detalhes de ${escape(p.name)}">
@@ -96,12 +114,13 @@ function render(){
  } else {
   // Estilo Catálogo (Cards Modernos Split Horizontal com Stepper)
   $('#product-grid').innerHTML=list.map(p=>{
+   if(p.line)return flexCard(p);
    const inQuote=quote.find(q=>q.id===p.id);
    const bg=catBg[p.category]||'#fdeee4';
    return `<article class="modern-card">
      <div class="card-left">
        <div class="card-badges">
-         <span class="card-cat-tag">${escape(p.category)}</span>
+         
          ${p.fresh?'<span class="card-new-tag">Novo</span>':''}
        </div>
        <button class="card-title-btn" data-detail="${p.id}">${escape(p.name)}</button>
@@ -130,7 +149,7 @@ function render(){
   }).join('');
  }
  $('#empty-state').hidden=!!list.length;$('#empty-title').textContent='Nenhum produto encontrado';$('#empty-copy').textContent='Experimente outro termo ou limpe os filtros.';
- document.title=(view==='home'?'Luganas Cabides | Cada peça merece destaque':`${category==='Todos'?'Catálogo':category} | Luganas Cabides`);
+ document.title=(view==='home'?'Luganas Cabides | Cada peça merece destaque':`${line==='flex-kids'?'Flex Kids':category==='Todos'?'Catálogo':category} | Luganas Cabides`);
  paintIcons();updateCounts();observeReveals();
 }
 const scrollObserver=('IntersectionObserver' in window)?new IntersectionObserver((entries,obs)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target);}});},{threshold:0.02,rootMargin:'60px'}):null;
@@ -138,13 +157,13 @@ function observeReveals(root=document){const els=root.querySelectorAll('.reveal-
 (document.documentElement || document.body)?.classList.add('js-ready');
 window.addEventListener('scroll',()=>{const h=$('.site-header');if(h)h.classList.toggle('is-scrolled',window.scrollY>15);},{passive:true});
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const h=a.getAttribute('href');if(h==='#inicio'){e.preventDefault();history.pushState(null,'','#inicio');route();window.scrollTo({top:0,behavior:'smooth'});}else if(h==='#conteudo'){e.preventDefault();$('#conteudo')?.scrollIntoView({behavior:'smooth',block:'start'});}});
-function route(){const hash=decodeURIComponent(location.hash.slice(1));material='Todos';$('#material').value=material;sort='featured';$('#sort').value=sort;query='';$('#search').value='';if($('#catalog-search'))$('#catalog-search').value='';if($('#home-search'))$('#home-search').value='';category='Todos';view=hash.startsWith('catalogo')?'catalog':'home';const slug=hash.split('/')[1];if(slug)category=catData.find(([c])=>normalize(c)===slug)?.[0]||'Todos';render();if(view==='catalog'&&hash!==''){$('#catalog-title').scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}}
+function route(){let hash;try{hash=decodeURIComponent(location.hash.slice(1))}catch{hash='catalogo'}line='';sizeFilter='Todos';material='Todos';$('#material').value=material;sort='featured';$('#sort').value=sort;query='';$('#search').value='';if($('#catalog-search'))$('#catalog-search').value='';if($('#home-search'))$('#home-search').value='';category='Todos';view=hash.startsWith('catalogo')?'catalog':'home';const slug=hash.split('/')[1];if(slug)category=catData.find(([c])=>normalize(c)===slug)?.[0]||'Todos';if(hash.split('/')[2]==='flex-kids'&&category==='Bustos')line='flex-kids';render();if(view==='catalog'&&hash!==''){$('#catalog-title').scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}}
 window.addEventListener('hashchange',route);
-$('#filter-chips')?.addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;category=b.dataset.filter;render()});
+$('#filter-chips')?.addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;const cat=b.dataset.filter;const target=cat==='Todos'?'catalogo':'catalogo/'+normalize(cat);if(location.hash==='#'+target){line='';sizeFilter='Todos';category=cat;material='Todos';render()}else location.hash=target});
 $('#material')?.addEventListener('change',e=>{material=e.target.value;render()});$('#sort')?.addEventListener('change',e=>{sort=e.target.value;render()});
-function resetFilters(){material='Todos';category='Todos';query='';sort='featured';if($('#material'))$('#material').value='Todos';if($('#sort'))$('#sort').value='featured';$('#search').value='';if($('#catalog-search'))$('#catalog-search').value='';if($('#home-search'))$('#home-search').value='';view='catalog';render()}
+function resetFilters(){sizeFilter='Todos';material='Todos';query='';sort='featured';if($('#material'))$('#material').value='Todos';if($('#sort'))$('#sort').value='featured';$('#search').value='';if($('#catalog-search'))$('#catalog-search').value='';if($('#home-search'))$('#home-search').value='';view='catalog';render()}
 $('#clear-filters')?.addEventListener('click',resetFilters);$('#empty-reset')?.addEventListener('click',()=>{if(location.hash==='#catalogo')resetFilters();else location.hash='catalogo'});
-function search(val){query=val.trim();$('#search').value=query;if($('#catalog-search'))$('#catalog-search').value=query;if($('#home-search'))$('#home-search').value=query;category='Todos';material='Todos';if($('#material'))$('#material').value='Todos';view=query?'catalog':location.hash.startsWith('#catalogo')?'catalog':'home';render()}
+function search(val){line='';sizeFilter='Todos';query=val.trim();$('#search').value=query;if($('#catalog-search'))$('#catalog-search').value=query;if($('#home-search'))$('#home-search').value=query;category='Todos';material='Todos';if($('#material'))$('#material').value='Todos';view=query?'catalog':location.hash.startsWith('#catalogo')?'catalog':'home';render()}
 $('#search')?.addEventListener('input',e=>search(e.target.value));
 $('#search-form').addEventListener('submit',e=>{
   e.preventDefault();
@@ -160,8 +179,8 @@ $('#search-action-btn')?.addEventListener('click',e=>{
   }
   $('#catalog-title').scrollIntoView({block:'start',behavior:'smooth'});
 });
-function addToQuote(id,option=find(id).options[0],qty=1){const existing=quote.find(q=>q.id===id&&q.option===option);if(existing)existing.qty=Math.min(9999,existing.qty+qty);else quote.push({id,option,qty});persist();toast('Produto adicionado ao orçamento');}
-function openProduct(id){detailProduct=find(id);const p=detailProduct;$('#product-detail').innerHTML=`<div class="detail-layout">${photo(p,'detail-photo')}<div class="detail-copy"><p class="eyebrow">${p.category}</p><h2 id="detail-name">${p.name}</h2><p class="detail-description">${p.description}</p><label for="detail-option">Opção<select id="detail-option">${p.options.map(o=>`<option>${o}</option>`).join('')}</select></label><label for="detail-qty">Quantidade</label><div class="qty-control"><button data-detail-step="-1" aria-label="Diminuir quantidade">${icon('minus')}</button><input type="number" min="1" max="9999" value="1" id="detail-qty" inputmode="numeric"><button data-detail-step="1" aria-label="Aumentar quantidade">${icon('plus')}</button></div><button class="button" id="detail-add">${icon('bag')} Adicionar ao orçamento</button><p class="quote-hint">Imagem ilustrativa. Consulte disponibilidade.</p></div></div>`;$('#product-dialog').showModal()}
+function addToQuote(id,option,qty=1){const p=find(id);if(!p)return;if(p.line&&!p.options.includes(option)){openProduct(id);return}option=option||p.options[0];if(!p.options.includes(option))return;qty=clamp(qty);const existing=quote.find(q=>q.id===id&&q.option===option);if(existing)existing.qty=Math.min(9999,existing.qty+qty);else quote.push({id,option,qty});persist();toast('Produto adicionado ao orçamento');}
+function openProduct(id,edit=null){editingItem=edit;detailProduct=find(id);if(detailProduct?.line){openFlexProduct(detailProduct,edit);return}const p=detailProduct;$('#product-detail').innerHTML=`<div class="detail-layout">${photo(p,'detail-photo')}<div class="detail-copy"><p class="eyebrow">${p.category}</p><h2 id="detail-name">${p.name}</h2><p class="detail-description">${p.description}</p><label for="detail-option">Opção<select id="detail-option">${p.options.map(o=>`<option>${o}</option>`).join('')}</select></label><label for="detail-qty">Quantidade</label><div class="qty-control"><button data-detail-step="-1" aria-label="Diminuir quantidade">${icon('minus')}</button><input type="number" min="1" max="9999" value="1" id="detail-qty" inputmode="numeric"><button data-detail-step="1" aria-label="Aumentar quantidade">${icon('plus')}</button></div><button class="button" id="detail-add">${icon('bag')} Adicionar ao orçamento</button><p class="quote-hint">Imagem ilustrativa. Consulte disponibilidade.</p></div></div>`;$('#product-dialog').showModal()}
 document.addEventListener('click',e=>{
  const stepAdd=e.target.closest('[data-step-add]');
  const stepSub=e.target.closest('[data-step-sub]');
@@ -174,16 +193,31 @@ document.addEventListener('click',e=>{
  if(e.target.closest('.close-dialog')){e.target.closest('dialog').close();}
 });
 const clamp=n=>Math.max(1,Math.min(9999,Math.floor(Number(n)||1)));
-$('#product-dialog').addEventListener('click',e=>{const step=e.target.closest('[data-detail-step]');if(step)$('#detail-qty').value=clamp(Number($('#detail-qty').value)+Number(step.dataset.detailStep));if(e.target.closest('#detail-add')){addToQuote(detailProduct.id,$('#detail-option').value,clamp($('#detail-qty').value));$('#product-dialog').close()}});
+$('#product-dialog').addEventListener('click',e=>{const step=e.target.closest('[data-detail-step]');if(step)$('#detail-qty').value=clamp(Number($('#detail-qty').value)+Number(step.dataset.detailStep));if(e.target.closest('#detail-add')&&!detailProduct.line){addToQuote(detailProduct.id,$('#detail-option').value,clamp($('#detail-qty').value));$('#product-dialog').close()}});
 $('#product-dialog').addEventListener('change',e=>{if(e.target.id==='detail-qty')e.target.value=clamp(e.target.value)});
-function renderQuote(){const list=$('#quote-items');$('#quote-bottom').hidden=!quote.length;if(!quote.length){list.innerHTML=`<div class="empty-state">${icon('bag')}<h3>Vamos montar sua seleção?</h3><p>Adicione produtos pelo botão + do catálogo.</p><button class="button" id="quote-explore">Explorar catálogo</button></div>`;return}list.innerHTML=quote.map((q,i)=>{const p=find(q.id);return `<div class="quote-item">${photo(p,'quote-photo')}<div><h3>${p.name}</h3><p>${escape(q.option)}</p><div class="qty-control"><button data-quote-step="-1" data-index="${i}" aria-label="Diminuir quantidade de ${p.name}" ${q.qty===1?'disabled':''}>${icon('minus')}</button><input aria-label="Quantidade de ${p.name}" data-quote-qty="${i}" type="number" min="1" max="9999" inputmode="numeric" value="${q.qty}"><button data-quote-step="1" data-index="${i}" aria-label="Aumentar quantidade de ${p.name}">${icon('plus')}</button></div></div><button class="icon-btn" data-remove="${i}" aria-label="Remover ${p.name} do orçamento">${icon('trash')}</button></div>`}).join('');$('#quote-notes').value=notes;paintIcons($('#quote-dialog'));}
+function renderQuote(){const list=$('#quote-items');$('#quote-bottom').hidden=!quote.length;if(!quote.length){list.innerHTML=`<div class="empty-state">${icon('bag')}<h3>Vamos montar sua seleção?</h3><p>Adicione produtos pelo botão + do catálogo.</p><button class="button" id="quote-explore">Explorar catálogo</button></div>`;return}list.innerHTML=quote.map((q,i)=>{const p=find(q.id);return `<div class="quote-item">${p.line?headPhoto(q.option,'quote-head-photo'):photo(p,'quote-photo')}<div><h3>${p.name}</h3><p>${p.line?'Cabeça: ':''}${escape(q.option)}</p>${p.price?`<p class="quote-price">${money(p.price*q.qty)} <small>(${money(p.price)} / un.)</small></p><button class="detail-link-btn" data-edit="${i}">Editar cabeça</button>`:''}<div class="qty-control"><button data-quote-step="-1" data-index="${i}" aria-label="Diminuir quantidade de ${p.name}" ${q.qty===1?'disabled':''}>${icon('minus')}</button><input aria-label="Quantidade de ${p.name}" data-quote-qty="${i}" type="number" min="1" max="9999" inputmode="numeric" value="${q.qty}"><button data-quote-step="1" data-index="${i}" aria-label="Aumentar quantidade de ${p.name}">${icon('plus')}</button></div></div><button class="icon-btn" data-remove="${i}" aria-label="Remover ${p.name} do orçamento">${icon('trash')}</button></div>`}).join('');const priced=quote.filter(q=>find(q.id).price);$('#quote-subtotal').hidden=!priced.length;$('#quote-subtotal').innerHTML=priced.length?`<span>${priced.length===quote.length?'Subtotal de referência':'Subtotal Flex Kids'}</span><strong>${money(priced.reduce((s,q)=>s+find(q.id).price*q.qty,0))}</strong><small>Valores da tabela enviada. Cabeça, disponibilidade e frete a confirmar com a Luganas.${priced.length!==quote.length?' Demais produtos sob consulta.':''}</small>`:'';$('#quote-notes').value=notes;paintIcons($('#quote-dialog'));}
 $('#quote-link').addEventListener('click',()=>{renderQuote();$('#quote-dialog').showModal()});
-$('#quote-dialog').addEventListener('click',e=>{const step=e.target.closest('[data-quote-step]'),remove=e.target.closest('[data-remove]');if(step){const q=quote[Number(step.dataset.index)];q.qty=clamp(q.qty+Number(step.dataset.quoteStep));persist();renderQuote()}if(remove){quote.splice(Number(remove.dataset.remove),1);persist();renderQuote()}if(e.target.closest('#quote-explore')){$('#quote-dialog').close();if(location.hash==='#catalogo')resetFilters();else location.hash='catalogo'}});
+$('#quote-dialog').addEventListener('click',e=>{const edit=e.target.closest('[data-edit]');if(edit){const i=Number(edit.dataset.edit);$('#quote-dialog').close();openProduct(quote[i].id,quote[i]);return}const step=e.target.closest('[data-quote-step]'),remove=e.target.closest('[data-remove]');if(step){const q=quote[Number(step.dataset.index)];q.qty=clamp(q.qty+Number(step.dataset.quoteStep));persist();renderQuote()}if(remove){quote.splice(Number(remove.dataset.remove),1);persist();renderQuote()}if(e.target.closest('#quote-explore')){$('#quote-dialog').close();if(location.hash==='#catalogo')resetFilters();else location.hash='catalogo'}});
 $('#quote-dialog').addEventListener('change',e=>{if(e.target.matches('[data-quote-qty]')){quote[Number(e.target.dataset.quoteQty)].qty=clamp(e.target.value);persist();renderQuote()}});
 $('#quote-notes').addEventListener('input',e=>{notes=e.target.value;persist()});
 const WHATSAPP_NUMBER = ''; // Configure aqui o número da Luganas com DDD (ex: '5511999999999')
-function quoteText(){return 'Olá, Luganas! Gostaria de fazer o seguinte pedido:\n\n'+quote.map(q=>`• ${q.qty} × ${find(q.id).name} (${q.option})`).join('\n')+(notes.trim()?'\n\nObservações: '+notes.trim():'')+'\n\nPodem confirmar valores e prazo de entrega?';}
+function quoteText(){return 'Olá, Luganas! Gostaria de fazer o seguinte pedido:\n\n'+quote.map(q=>`• ${q.qty} × ${find(q.id).name} (${find(q.id).line?'Cabeça: ':''}${q.option})${find(q.id).price?' — '+money(find(q.id).price*q.qty)+' (referência)':''}`).join('\n')+(notes.trim()?'\n\nObservações: '+notes.trim():'')+'\n\nPodem confirmar valores e prazo de entrega?';}
 $('#make-order')?.addEventListener('click',()=>{if(!quote.length)return;const msg=quoteText();const url=WHATSAPP_NUMBER?`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`:`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;window.open(url,'_blank','noopener,noreferrer');});
 document.querySelectorAll('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close()}}));
+function flexCard(p){
+ return `<article class="modern-card flex-size-card"><div class="card-left"><button class="card-title-btn" data-detail="${p.id}">${escape(p.name)}</button><p class="card-desc size-price">${money(p.price)}</p><div class="card-action-row"><button class="add-pill-btn" data-detail="${p.id}">${icon('plus')} Escolher cabeça</button></div></div><div class="card-right" style="--card-bg:#f7f1e9"><button class="card-photo-btn" data-detail="${p.id}" aria-label="Ver detalhes de ${escape(p.name)}">${photo({...p,img:'assets/products/busto-flex-kids.png'},'card-thumb')}</button></div></article>`;
+}
+function openFlexProduct(p,edit){
+ const selected=edit?.option||'';
+ $('#product-detail').innerHTML=`<form id="flex-form" class="flex-detail"><div class="flex-detail-visual">${photo(p,'detail-photo')}<p class="flex-photo-caption">Imagem ilustrativa da linha.</p><section class="flex-specs" aria-labelledby="flex-specs-title"><h3 id="flex-specs-title">Características do produto</h3><p>${escape(p.description)}</p></section><div id="selected-head-preview" class="selected-head-preview" ${selected?'':'hidden'}>${selected?headPhoto(selected):''}<span>${selected?'Cabeça: '+escape(selected):''}</span></div></div><div class="flex-detail-copy"><p class="eyebrow">BUSTOS / FLEX KIDS</p><h2 id="detail-name">${escape(p.name)}</h2><p class="flex-price">${money(p.price)} <small>/ unidade*</small></p><fieldset class="head-fieldset"><legend>Escolha a cabeça <span>* Obrigatório</span></legend><div class="head-grid">${heads.map(h=>`<label class="head-option"><input type="radio" name="head" value="${escape(h)}" required ${h===selected?'checked':''}>${headPhoto(h)}<span>${escape(h)}</span><b aria-hidden="true">✓</b></label>`).join('')}</div></fieldset><div class="flex-purchase"><p id="flex-selection-summary" aria-live="polite">Tamanho: <strong>${escape(p.size)}</strong> · Cabeça: <strong>${selected?escape(selected):'selecione acima'}</strong></p><label for="detail-qty">Quantidade</label><div class="flex-purchase-actions"><div class="qty-control"><button type="button" data-detail-step="-1" aria-label="Diminuir quantidade">${icon('minus')}</button><input type="number" min="1" max="9999" value="${edit?.qty||1}" id="detail-qty" inputmode="numeric" required><button type="button" data-detail-step="1" aria-label="Aumentar quantidade">${icon('plus')}</button></div><button class="button" type="submit">${icon('bag')} ${edit?'Salvar alteração':'Adicionar ao orçamento'}</button></div></div><p class="quote-hint">Preço de referência. Cabeça, disponibilidade e frete a confirmar.</p></div></form>`;
+ const form=$('#flex-form');
+ form.addEventListener('change',e=>{if(e.target.name==='head'){const h=e.target.value;$('#flex-selection-summary').innerHTML=`Tamanho: <strong>${escape(p.size)}</strong> · Cabeça: <strong>${escape(h)}</strong>`;const preview=$('#selected-head-preview');preview.hidden=false;preview.innerHTML=headPhoto(h)+`<span>Cabeça: ${escape(h)}</span>`;}});
+ form.addEventListener('submit',e=>{e.preventDefault();const selected=form.querySelector('input[name="head"]:checked');if(!selected)return;const qty=clamp($('#detail-qty').value);if(edit){const i=quote.indexOf(edit);if(i<0)return;const existing=quote.find(q=>q!==edit&&q.id===p.id&&q.option===selected.value);if(existing){existing.qty=Math.min(9999,existing.qty+qty);quote.splice(i,1)}else{edit.option=selected.value;edit.qty=qty}persist();toast('Configuração atualizada')}else addToQuote(p.id,selected.value,qty);$('#product-dialog').close();render();renderQuote();$('#quote-dialog').showModal();});
+ $('#product-dialog').showModal();$('#product-dialog').scrollTop=0;
+}
+$('#size-filter').addEventListener('change',e=>{sizeFilter=e.target.value;render()});
+$('#quote-more-flex').addEventListener('click',()=>{$('#quote-dialog').close()});
+$('#product-dialog').addEventListener('close',()=>{if(editingItem){editingItem=null;if(!$('#quote-dialog').open){renderQuote();$('#quote-dialog').showModal()}}});
+
 route();
 })();
