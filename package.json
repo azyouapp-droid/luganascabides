@@ -1,13 +1,1 @@
-{
-  "name": "lagunas-cabides",
-  "version": "1.0.0",
-  "description": "Catálogo Luganas Cabides",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
-}
+{"name":"luganas-cabides","version":"2.0.0","private":true,"scripts":{"start":"node server.cjs","dev":"node server.cjs"}}
