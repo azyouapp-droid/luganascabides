@@ -1197,9 +1197,9 @@ html:has(.photo-viewer[open]) {
 
 /* Expositores: mantenha a foto inteira e mescle a borda com o azul da vitrine. */
 .category-expositores .category-hero > img {
-  width: 58%;
+  width: auto;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
 }
 
@@ -1332,7 +1332,7 @@ html:has(.photo-viewer[open]) {
 
 .category-expositores .category-hero > img {
   object-position: right center;
-  mask-image: linear-gradient(to right, transparent, #000 32%);
+  mask-image: linear-gradient(to right, transparent, rgb(0 0 0 / 38%) 15%, #000 42%);
 }
 
 @media (max-width: 700px) {
@@ -1340,7 +1340,18 @@ html:has(.photo-viewer[open]) {
     font-size: clamp(23px, 6.4vw, 40px);
   }
 
+  .category-expositores .category-hero, .category-expositores .category-intro {
+    min-height: clamp(320px, 90vw, 420px);
+  }
+
   .category-expositores .category-hero > img {
+    object-position: 85% center;
     mask-image: none;
+  }
+}
+
+@media (min-width: 701px) {
+  .category-expositores .category-hero {
+    min-height: 450px;
   }
 }
