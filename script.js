@@ -152,7 +152,7 @@ filterButtons.forEach(button => button.addEventListener('click', () => {
   filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
   let index = 0;
   lineCards.forEach(card => {
-    const show = active === 'todos' || card.dataset.line === active;
+    const show = active === 'todos' || card.dataset.line.split(/\s+/).includes(active);
     card.hidden = !show;
     if (!show) return;
     card.classList.add('visible');
@@ -164,3 +164,59 @@ filterButtons.forEach(button => button.addEventListener('click', () => {
     }
   });
 }));
+
+document.querySelectorAll('.line-carousel-card').forEach(carousel => {
+  const photos = [...carousel.querySelectorAll('img')];
+  const controls = carousel.querySelector('.line-carousel-controls');
+  const count = carousel.querySelector('.line-carousel-count');
+  const dots = carousel.querySelectorAll('.line-carousel-dots i');
+  let current = 0;
+  let fade;
+  let lastChange = performance.now();
+
+  function changePhoto(step, manual = false) {
+    fade?.cancel();
+    const previous = photos[current];
+    photos.forEach(photo => {
+      photo.hidden = photo !== previous;
+      photo.style.zIndex = '';
+    });
+    current = (current + step + photos.length) % photos.length;
+    photos[current].hidden = false;
+    count.setAttribute('aria-live', manual ? 'polite' : 'off');
+    count.textContent = `Foto ${current + 1} de ${photos.length}`;
+    dots.forEach((dot, index) => dot.classList.toggle('is-current', index === current));
+    const next = photos[current];
+    if (motionPreference.matches || !next.animate) {
+      previous.hidden = true;
+    } else {
+      next.style.zIndex = '1';
+      const animation = next.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: 620,
+        easing: 'ease-in-out',
+      });
+      fade = animation;
+      animation.onfinish = () => {
+        if (fade !== animation) return;
+        previous.hidden = true;
+        next.style.zIndex = '';
+        fade = undefined;
+      };
+    }
+    lastChange = performance.now();
+  }
+
+  controls.querySelectorAll('[data-step]').forEach(button => {
+    button.addEventListener('click', () => changePhoto(Number(button.dataset.step), true));
+  });
+
+  window.setInterval(() => {
+    if (motionPreference.matches || document.hidden || carousel.closest('[hidden]')) return;
+    const rect = carousel.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight && performance.now() - lastChange >= 5000) {
+      changePhoto(1);
+    }
+  }, 500);
+
+  controls.hidden = false;
+});
