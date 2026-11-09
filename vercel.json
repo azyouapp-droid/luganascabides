@@ -27,6 +27,10 @@
     {
       "destination": "/manequins.html",
       "source": "/manequins"
+    },
+    {
+      "destination": "/expositores.html",
+      "source": "/expositores"
     }
   ],
   "redirects": [
@@ -48,6 +52,11 @@
     {
       "source": "/manequins.html",
       "destination": "/manequins",
+      "permanent": true
+    },
+    {
+      "source": "/expositores.html",
+      "destination": "/expositores",
       "permanent": true
     }
   ]

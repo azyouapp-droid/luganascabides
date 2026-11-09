@@ -1194,3 +1194,133 @@ html:has(.photo-viewer[open]) {
     font-size: clamp(27px, 9vw, 45px);
   }
 }
+
+/* Expositores: mantenha a foto inteira e mescle a borda com o azul da vitrine. */
+.category-expositores .category-hero > img {
+  width: 58%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.category-expositores .category-hero > img {
+  left: auto;
+  right: 0;
+  mask-image: linear-gradient(to left, #000 72%, transparent);
+}
+
+@media (max-width: 700px) {
+  .category-expositores .category-hero > img {
+    width: 100%;
+    mask-image: none;
+  }
+
+  .category-tabs nav {
+    gap: clamp(8px, 3vw, 22px);
+    flex-wrap: wrap;
+  }
+}
+
+#expositores.campaign {
+  background: #08131e;
+}
+
+#expositores.campaign::after {
+  background: none;
+}
+
+#expositores .campaign-image {
+  left: 34%;
+  mask-image: linear-gradient(to right, transparent 3%, rgb(0 0 0 / 25%) 20%, rgb(0 0 0 / 75%) 43%, #000 65%);
+}
+
+#expositores .campaign-image img {
+  object-position: center;
+}
+
+@media (max-width: 700px) {
+  #expositores .campaign-image {
+    left: 0;
+    bottom: 22%;
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  }
+}
+
+@media (min-width: 701px) {
+  #expositores .campaign-image {
+    left: 25%;
+    mask-image: linear-gradient(to right, transparent, rgb(0 0 0 / 8%) 16%, rgb(0 0 0 / 27%) 32%, rgb(0 0 0 / 57%) 48%, rgb(0 0 0 / 87%) 64%, #000 79%);
+  }
+
+  #expositores .campaign-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(24px);
+    mask-image: linear-gradient(to right, #000 30%, transparent 63%);
+    pointer-events: none;
+  }
+}
+
+#expositores .campaign-image img {
+  object-fit: contain;
+  object-position: right center;
+  transform: none;
+}
+
+@media (min-width: 701px) {
+  #expositores .campaign-image {
+    left: auto;
+    width: auto;
+    max-width: 66%;
+    aspect-ratio: 3 / 2;
+    mask-image: linear-gradient(to right, transparent, #000 16%);
+  }
+
+  #expositores .campaign-image::after {
+    mask-image: linear-gradient(to right, #000, transparent 22%);
+  }
+}
+
+@media (max-width: 700px) {
+  #expositores .campaign-image {
+    bottom: 40%;
+    mask-image: none;
+  }
+
+  #expositores .campaign-image img {
+    object-position: center;
+  }
+}
+
+@media (min-width: 701px) {
+  #expositores .campaign-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(to right, #08131e 0%, rgb(8 19 30 / 92%) 16%, rgb(8 19 30 / 52%) 36%, rgb(8 19 30 / 12%) 58%, transparent 78%);
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 700px) {
+  #expositores .campaign-image {
+    mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  }
+}
+
+#expositores.campaign {
+  min-height: 420px;
+}
+
+@media (max-width: 700px) {
+  #expositores .campaign-image {
+    bottom: 32%;
+  }
+}
+
+.category-expositores .line-photo img[src$="expositores-cromados.png"] {
+  object-position: center top;
+  transform: none;
+}
