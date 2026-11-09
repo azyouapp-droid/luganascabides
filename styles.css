@@ -1125,13 +1125,6 @@ h2 > br + em {
   outline-offset: -4px;
 }
 
-.photo-expand svg {
-  box-sizing: content-box;
-  padding: 9px;
-  border-radius: 50%;
-  background: #091b2bbf;
-}
-
 .photo-viewer {
   max-width: calc(100vw - 32px);
   max-height: calc(100dvh - 32px);
@@ -1176,4 +1169,28 @@ h2 > br + em {
 
 html:has(.photo-viewer[open]) {
   overflow: hidden;
+}
+
+.product-title-detail {
+  display: block;
+  margin-top: 3px;
+  font-size: .9em;
+  font-weight: 500;
+  text-wrap: balance;
+  max-width: 24ch;
+}
+
+.product-photo img[src$="destaque-manequim-fibra.png"] {
+  object-position: center 32%;
+}
+
+.section-heading:has(#selection-title) > p {
+  max-width: 35ch;
+  text-wrap: balance;
+}
+
+@media (max-width: 700px) {
+  #selection-title {
+    font-size: clamp(27px, 9vw, 45px);
+  }
 }

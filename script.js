@@ -188,7 +188,6 @@ document.querySelectorAll('.product-photo, .catalog-photo, .line-photo').forEach
   const title = frame.closest('.product, .catalog-product, .line-card')?.querySelector('h3')?.textContent;
   expand.setAttribute('aria-label', title ? 'Ampliar foto: ' + title : 'Ampliar foto');
   expand.setAttribute('aria-haspopup', 'dialog');
-  expand.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m14.5 14.5 5 5M7.5 10h5M10 7.5v5"/></svg>';
   expand.addEventListener('click', () => {
     const photos = [...frame.querySelectorAll('img:not([hidden])')];
     const photo = photos.find(image => image.style.zIndex === '1') ?? photos[0];
