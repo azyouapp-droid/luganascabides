@@ -1,1 +1,54 @@
-{"cleanUrls":false,"headers":[{"source":"/(.*)","headers":[{"key":"Cache-Control","value":"public, max-age=0, must-revalidate"}]}]}
+{
+  "cleanUrls": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "destination": "/index.html",
+      "source": "/inicio"
+    },
+    {
+      "destination": "/cabides.html",
+      "source": "/cabides"
+    },
+    {
+      "destination": "/bustos.html",
+      "source": "/bustos"
+    },
+    {
+      "destination": "/manequins.html",
+      "source": "/manequins"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/inicio",
+      "permanent": true
+    },
+    {
+      "source": "/cabides.html",
+      "destination": "/cabides",
+      "permanent": true
+    },
+    {
+      "source": "/bustos.html",
+      "destination": "/bustos",
+      "permanent": true
+    },
+    {
+      "source": "/manequins.html",
+      "destination": "/manequins",
+      "permanent": true
+    }
+  ]
+}
