@@ -165,6 +165,41 @@ filterButtons.forEach(button => button.addEventListener('click', () => {
   });
 }));
 
+const photoViewer = document.createElement('dialog');
+photoViewer.className = 'photo-viewer';
+photoViewer.setAttribute('aria-label', 'Visualização da foto');
+photoViewer.innerHTML = `
+  <button type="button" class="photo-viewer-close" aria-label="Fechar foto" autofocus>×</button>
+  <div class="photo-viewer-frame"><img alt=""></div>
+`;
+document.body.append(photoViewer);
+
+const fullPhoto = photoViewer.querySelector('img');
+photoViewer.querySelector('button').addEventListener('click', () => photoViewer.close());
+photoViewer.addEventListener('click', event => {
+  if (event.target === photoViewer) photoViewer.close();
+});
+photoViewer.addEventListener('close', () => fullPhoto.removeAttribute('src'));
+
+document.querySelectorAll('.product-photo, .catalog-photo, .line-photo').forEach(frame => {
+  const expand = document.createElement('button');
+  expand.type = 'button';
+  expand.className = 'photo-expand';
+  const title = frame.closest('.product, .catalog-product, .line-card')?.querySelector('h3')?.textContent;
+  expand.setAttribute('aria-label', title ? 'Ampliar foto: ' + title : 'Ampliar foto');
+  expand.setAttribute('aria-haspopup', 'dialog');
+  expand.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m14.5 14.5 5 5M7.5 10h5M10 7.5v5"/></svg>';
+  expand.addEventListener('click', () => {
+    const photos = [...frame.querySelectorAll('img:not([hidden])')];
+    const photo = photos.find(image => image.style.zIndex === '1') ?? photos[0];
+    if (!photo) return;
+    fullPhoto.alt = photo.alt;
+    fullPhoto.src = photo.currentSrc || photo.src;
+    photoViewer.showModal();
+  });
+  frame.append(expand);
+});
+
 document.querySelectorAll('.line-carousel-card').forEach(carousel => {
   const photos = [...carousel.querySelectorAll('img')];
   const controls = carousel.querySelector('.line-carousel-controls');
@@ -211,7 +246,7 @@ document.querySelectorAll('.line-carousel-card').forEach(carousel => {
   });
 
   window.setInterval(() => {
-    if (motionPreference.matches || document.hidden || carousel.closest('[hidden]')) return;
+    if (motionPreference.matches || document.hidden || photoViewer.open || carousel.closest('[hidden]')) return;
     const rect = carousel.getBoundingClientRect();
     if (rect.bottom > 0 && rect.top < window.innerHeight && performance.now() - lastChange >= 5000) {
       changePhoto(1);
