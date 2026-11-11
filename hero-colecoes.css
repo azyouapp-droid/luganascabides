@@ -379,6 +379,13 @@
 }
 
 @media (max-width: 740px) {
+  [data-tema="azul"] .lug-relief {
+    /* Evita amplificar irregularidades dos tons escuros em telas pequenas. */
+    object-position: 35% center;
+    filter: grayscale(1) brightness(.54) contrast(2.7);
+    opacity: .26;
+  }
+
   .lug-card {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;

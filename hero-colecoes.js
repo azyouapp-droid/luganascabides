@@ -62,15 +62,15 @@
       ], outgoing),
       previous.animate([
         { visibility: 'visible', opacity: 1, transform: 'none' },
-        { visibility: 'visible', opacity: 0, transform: 'translateX(-7%) scale(.98)', filter: 'blur(2px)' }
+        { visibility: 'visible', opacity: 0, transform: 'translateX(-7%) scale(.98)' }
       ], outgoing),
       wordmark.animate([
         { opacity: 0, scale: .96, translate: '0 10px' },
         { opacity: getComputedStyle(wordmark).opacity, scale: 1, translate: '0 0' }
       ], { ...incoming, delay: 45 }),
       next.animate([
-        { opacity: 0, transform: 'translateX(8%) scale(.97)', filter: 'blur(2px)' },
-        { opacity: 1, transform: 'none', filter: 'blur(0)' }
+        { opacity: 0, transform: 'translateX(8%) scale(.97)' },
+        { opacity: 1, transform: 'none' }
       ], { ...incoming, delay: 90 }),
       phrase.animate([
         { opacity: 0, translate: '0 15px' },
