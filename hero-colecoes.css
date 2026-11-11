@@ -285,14 +285,14 @@
 }
 
 [data-tema="azul"] .lug-relief {
-  /* Reposiciona os tons claros do vídeo antes de aumentar o contraste. */
-  filter: grayscale(1) brightness(.54) contrast(4);
-  mix-blend-mode: soft-light;
-  opacity: .18;
+  /* Relevo já tratado em azul, sem filtros em tempo real. */
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: .08;
 }
 
 [data-tema="azul"] .lug-wordmark {
-  filter:url(#lug-wordmark-edge) blur(.8px) brightness(0) invert(1);
+  filter:url(#lug-wordmark-edge) brightness(0) invert(1);
   opacity: .08;
 }
 
@@ -380,10 +380,7 @@
 
 @media (max-width: 740px) {
   [data-tema="azul"] .lug-relief {
-    /* Evita amplificar irregularidades dos tons escuros em telas pequenas. */
     object-position: 35% center;
-    filter: grayscale(1) brightness(.54) contrast(2.7);
-    opacity: .26;
   }
 
   .lug-card {
