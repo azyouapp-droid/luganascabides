@@ -1,0 +1,86 @@
+<svg class="bg-minimalista-svg" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" shape-rendering="geometricPrecision">
+      <defs>
+        <!-- Base Deep Navy #091B2B -->
+        <linearGradient id="baseBg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#102940" />
+          <stop offset="45%" stop-color="#091B2B" />
+          <stop offset="100%" stop-color="#05111C" />
+        </linearGradient>
+
+        <!-- Iluminação suave vinda do canto superior esquerdo -->
+        <radialGradient id="topLeftAmbient" cx="5%" cy="5%" r="70%">
+          <stop offset="0%" stop-color="#1D4163" stop-opacity="0.75" />
+          <stop offset="40%" stop-color="#112B44" stop-opacity="0.4" />
+          <stop offset="100%" stop-color="#091B2B" stop-opacity="0" />
+        </radialGradient>
+
+        <!-- Gradientes de Pétalas de Seda (Transição suave na própria cor, sem blur) -->
+        <linearGradient id="silkFold1" x1="0%" y1="15%" x2="95%" y2="85%">
+          <stop offset="0%" stop-color="#183856" stop-opacity="0.65" />
+          <stop offset="35%" stop-color="#0F263B" stop-opacity="0.45" />
+          <stop offset="75%" stop-color="#091B2B" stop-opacity="0.15" />
+          <stop offset="100%" stop-color="#06121E" stop-opacity="0" />
+        </linearGradient>
+
+        <linearGradient id="silkFold2" x1="10%" y1="0%" x2="90%" y2="100%">
+          <stop offset="0%" stop-color="#1B3D5D" stop-opacity="0.55" />
+          <stop offset="45%" stop-color="#0E253A" stop-opacity="0.35" />
+          <stop offset="85%" stop-color="#081827" stop-opacity="0.1" />
+          <stop offset="100%" stop-color="#06131F" stop-opacity="0" />
+        </linearGradient>
+
+        <linearGradient id="silkFold3" x1="20%" y1="10%" x2="85%" y2="95%">
+          <stop offset="0%" stop-color="#1E4366" stop-opacity="0.45" />
+          <stop offset="50%" stop-color="#0F273D" stop-opacity="0.28" />
+          <stop offset="90%" stop-color="#091B2B" stop-opacity="0.06" />
+          <stop offset="100%" stop-color="#071522" stop-opacity="0" />
+        </linearGradient>
+
+        <!-- Gradientes das Pétalas Superiores Esquerdas -->
+        <linearGradient id="petalTopLeft1" x1="0%" y1="0%" x2="85%" y2="85%">
+          <stop offset="0%" stop-color="#21486D" stop-opacity="0.5" />
+          <stop offset="55%" stop-color="#122C44" stop-opacity="0.3" />
+          <stop offset="92%" stop-color="#0A1E30" stop-opacity="0.08" />
+          <stop offset="100%" stop-color="#091B2B" stop-opacity="0" />
+        </linearGradient>
+
+        <linearGradient id="petalTopLeft2" x1="0%" y1="0%" x2="75%" y2="75%">
+          <stop offset="0%" stop-color="#26527A" stop-opacity="0.45" />
+          <stop offset="60%" stop-color="#14314B" stop-opacity="0.25" />
+          <stop offset="95%" stop-color="#0B2033" stop-opacity="0.05" />
+          <stop offset="100%" stop-color="#091B2B" stop-opacity="0" />
+        </linearGradient>
+
+        <!-- Vale de Sombra Profunda porém Suave -->
+        <linearGradient id="deepSoftValley" x1="25%" y1="0%" x2="85%" y2="100%">
+          <stop offset="0%" stop-color="#091B2B" stop-opacity="0" />
+          <stop offset="50%" stop-color="#05111C" stop-opacity="0.55" />
+          <stop offset="100%" stop-color="#030B13" stop-opacity="0.75" />
+        </linearGradient>
+      </defs>
+
+      <!-- 1. Fundo Base Nítido -->
+      <rect width="1920" height="1080" fill="url(#baseBg)" />
+      <rect width="1920" height="1080" fill="url(#topLeftAmbient)" />
+
+      <!-- 2. Vale de Profundidade Suave -->
+      <path d="M220 1080 C 780 740, 1280 320, 1920 -120 L 1920 1080 Z" fill="url(#deepSoftValley)" />
+
+      <!-- 3. Grandes Ondas Diagonais de Seda -->
+      <path d="M-420 520 C 240 700, 860 320, 1460 -200 L 2100 -200 L 2100 1180 L -420 1180 Z" fill="url(#silkFold1)" />
+      <path d="M-280 680 C 360 780, 960 380, 1600 -140 L 2100 -140 L 2100 1180 L -280 1180 Z" fill="url(#silkFold2)" />
+      <path d="M-120 840 C 480 840, 1080 440, 1760 -60 L 2100 -60 L 2100 1180 L -120 1180 Z" fill="url(#silkFold3)" />
+      <path d="M80 990 C 640 880, 1220 510, 1920 40 L 2100 40 L 2100 1180 L 80 1180 Z" fill="url(#silkFold1)" />
+      <path d="M340 1110 C 860 930, 1380 600, 2000 190 L 2100 190 L 2100 1180 L 340 1180 Z" fill="url(#silkFold2)" />
+      <path d="M640 1150 C 1100 970, 1540 700, 2040 370 L 2100 1180 L 640 1180 Z" fill="url(#silkFold3)" />
+      <path d="M960 1170 C 1340 1020, 1700 810, 2060 560 L 2100 1180 L 960 1180 Z" fill="url(#silkFold1)" />
+
+      <!-- 4. Pétalas Concêntricas do Canto Superior Esquerdo -->
+      <path d="M-160 -120 L 1220 -120 C 1020 440, 540 730, -160 820 Z" fill="url(#petalTopLeft1)" />
+      <path d="M-160 -120 L 1040 -120 C 860 370, 460 610, -160 690 Z" fill="url(#petalTopLeft2)" />
+      <path d="M-160 -120 L 870 -120 C 710 300, 380 500, -160 560 Z" fill="url(#petalTopLeft1)" />
+      <path d="M-160 -120 L 710 -120 C 570 235, 300 395, -160 445 Z" fill="url(#petalTopLeft2)" />
+      <path d="M-160 -120 L 560 -120 C 440 175, 225 295, -160 335 Z" fill="url(#petalTopLeft1)" />
+      <path d="M-160 -120 L 420 -120 C 325 125, 160 210, -160 240 Z" fill="url(#petalTopLeft2)" />
+      <path d="M-160 -120 L 290 -120 C 215 80, 95 135, -160 155 Z" fill="url(#petalTopLeft1)" />
+    </svg>
