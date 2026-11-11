@@ -265,16 +265,6 @@
   background: var(--navy);
 }
 
-[data-tema="azul"] .lug-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: url('assets/hero-colecoes/fundo-hero.webp') center / cover no-repeat;
-  opacity: .1;
-  pointer-events: none;
-}
-
 [data-tema="azul"] .lug-wordmark {
   filter:url(#lug-wordmark-edge) brightness(0) invert(1);
   opacity: .08;
