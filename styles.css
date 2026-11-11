@@ -1590,3 +1590,46 @@ html:has(.photo-viewer[open]) {
 .cream-section + .faq {
   margin-top: 0;
 }
+
+@media (max-width: 700px) {
+  .header .menu-toggle {
+    align-items: center;
+    gap: 4px;
+  }
+
+  .menu-toggle span,
+  .menu-toggle::before {
+    width: 16px;
+    height: 1px;
+    flex: 0 0 1px;
+    border-radius: 1px;
+    background: currentColor;
+  }
+
+  .menu-toggle::before {
+    content: '';
+    order: 1;
+    transition: opacity 180ms ease;
+  }
+
+  .menu-toggle span:first-child {
+    transform: translateX(4px);
+  }
+
+  .menu-toggle span:last-child {
+    order: 2;
+    transform: translateX(-4px);
+  }
+
+  .menu-toggle[aria-expanded="true"]::before {
+    opacity: 0;
+  }
+
+  .menu-toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(5px) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-5px) rotate(-45deg);
+  }
+}
