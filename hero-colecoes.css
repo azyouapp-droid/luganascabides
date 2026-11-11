@@ -269,7 +269,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: url('assets/hero-colecoes/fundo-hero.webp') center / cover no-repeat;
+  background: url('assets/hero-colecoes/fundo-hero.png') center / cover no-repeat;
   opacity: .07;
   pointer-events: none;
 }
