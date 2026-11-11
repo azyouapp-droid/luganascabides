@@ -5,7 +5,7 @@ const root = __dirname;
 const { redirects, rewrites } = require('./vercel.json');
 const pageRoutes = new Map(rewrites.map(({ source, destination }) => [source, destination]));
 const legacyRoutes = new Map(redirects.map(({ source, destination }) => [source, destination]));
-const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.ttf': 'font/ttf', '.otf': 'font/otf' };
+const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.webm': 'video/webm', '.ttf': 'font/ttf', '.otf': 'font/otf' };
 http.createServer((req, res) => {
   let url;
   let name;

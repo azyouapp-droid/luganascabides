@@ -7,6 +7,9 @@
   <meta name="description" content="Conheça a vitrine Luganas: cabides, bustos e manequins para valorizar cada peça. Explore as coleções e converse com a gente.">
   <title>Luganas Cabides — Sua vitrine. Outro nível.</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="hero-colecoes.css">
+  <script src="hero-colecoes.js" defer></script>
+  <link rel="stylesheet" href="destaques-mosaico.css">
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -22,20 +25,48 @@
   </div>
 </header>
 <main id="conteudo">
-  <section class="hero" id="inicio" aria-labelledby="hero-title">
-    <img class="hero-image" src="assets/cabides.png" alt="Cabide de madeira com gancho cromado, iluminado em laranja, ao lado de um cabide preto" fetchpriority="high" width="1536" height="1024">
-    <div class="hero-shade"></div>
-    <div class="hero-content container">
-
-      <h1 id="hero-title">Sua vitrine<br><em>em outro nível!</em></h1><p>Cabides, bustos e manequins: tudo personalizado e pensado para você.</p>
-      <a class="button" href="#colecoes">Conheça as coleções</a>
-
+  <div class="lug-hero-azul" data-tema="azul">
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <!-- Extrai o contorno da letra já composta, onde as partes sobrepostas formam uma única silhueta. -->
+      <filter id="lug-wordmark-edge" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+        <feMorphology in="SourceAlpha" operator="dilate" radius="1" result="outer"/>
+        <feMorphology in="SourceAlpha" operator="erode" radius="1" result="inner"/>
+        <feComposite in="outer" in2="inner" operator="out" result="edge"/>
+        <feFlood flood-color="#243649" result="ink"/>
+        <feComposite in="ink" in2="edge" operator="in"/>
+      </filter>
+    </defs>
+  </svg>
+  <section class="lug-hero" id="inicio" aria-labelledby="lug-title">
+    <video class="lug-relief" aria-hidden="true" tabindex="-1" autoplay muted playsinline preload="metadata" poster="assets/hero-colecoes/relevo-diagonal.webp">
+      <source src="assets/hero-colecoes/relevo-diagonal.webm" type="video/webm">
+    </video>
+    <div class="lug-gallery" aria-label="Coleções em destaque">
+      <div class="lug-stage">
+        <h1 class="lug-title" id="lug-title">
+          <span class="lug-headline"><span class="lug-wordmark lug-wordmark-cabides">Cabides</span> <span class="lug-phrase">Cada peça <em>no lugar.</em></span></span>
+          <span class="lug-headline" aria-hidden="true"><span class="lug-wordmark lug-wordmark-bustos">Bustos</span> <span class="lug-phrase">Dê forma <em>à coleção.</em></span></span>
+          <span class="lug-headline" aria-hidden="true"><span class="lug-wordmark lug-wordmark-manequins">Manequins</span> <span class="lug-phrase">Vista <em>sua vitrine.</em></span></span>
+          <span class="lug-headline" aria-hidden="true"><span class="lug-wordmark lug-wordmark-expositores">Expositores</span> <span class="lug-phrase">Valorize <em>os detalhes.</em></span></span>
+        </h1>
+        <figure class="lug-slide lug-slide-cabides"><img src="assets/hero-colecoes/cabides.png" fetchpriority="high" alt="Três cabides de madeira lado a lado, em tamanhos adulto e infantil"></figure>
+        <figure class="lug-slide" aria-hidden="true"><img src="assets/hero-colecoes/bustos.png" alt="Bustos de alfaiataria e infantil com suporte"></figure>
+        <figure class="lug-slide" aria-hidden="true"><img src="assets/hero-colecoes/manequins.png" alt="Manequins de corpo inteiro, adulto masculino, adulto feminino e infantil"></figure>
+        <figure class="lug-slide" aria-hidden="true"><img src="assets/hero-colecoes/expositores.png" alt="Expositores aramado, de madeira e cromado"></figure>
+        <a class="lug-details" href="/cabides"><span>Cabides</span><small>Ver coleção ↗</small></a>
+      </div>
+      <div class="lug-upcoming" role="group" aria-label="Próximas coleções" hidden>
+        <button type="button" class="lug-card"><img alt=""><span></span></button>
+        <button type="button" class="lug-card"><img alt=""><span></span></button>
+        <button type="button" class="lug-card"><img alt=""><span></span></button>
+      </div>
     </div>
-    <div class="annotation"><span>Design que valoriza</span><i></i></div>
-
   </section>
+  </div>
+  <div class="cream-section">
   <section class="selection container section-space" id="destaques" aria-labelledby="selection-title">
-    <div class="section-heading reveal"><div><h2 id="selection-title">Confira nossos<br><em>destaques!</em></h2></div><p>Algumas das nossas melhores opções pra você compor a sua vitrine!</p></div>
+    <div class="section-heading reveal"><div><h2 id="selection-title">Confira nossos<br><em>destaques!</em></h2></div></div>
     <div class="products">
       <article class="product reveal"><div class="product-photo"><img src="assets/destaque-cabide-ayo.png" alt="Cabides de madeira com presilhas acobreadas" loading="lazy" width="1254" height="1254"></div><a class="product-link" href="/cabides"><h3>Cabides premium personalizados</h3></a></article>
       <article class="product reveal"><div class="product-photo"><img src="assets/destaque-cabide-selene.png" alt="Cabides de madeira clara com presilhas prateadas" loading="lazy" width="1254" height="1254"></div><a class="product-link" href="/cabides"><h3>Cabides de madeira personalizados</h3></a></article>
@@ -61,8 +92,9 @@
       <div class="campaign-copy"><h2>Expositores para<br><em>seus acessórios.</em></h2><span class="button">Explorar modelos</span></div>
     </a>
   </section>
+  </div>
   <section class="faq container section-space" id="duvidas" aria-labelledby="faq-title">
-    <div class="reveal"><h2 id="faq-title">Boas escolhas<br><em>começam aqui.</em></h2><p>Tire suas dúvidas e converse com a gente<br class="desktop-break"> sobre a sua vitrine.</p></div>
+    <div class="reveal"><h2 id="faq-title">Tire as suas dúvidas<br><em>no nosso FAQ</em></h2></div>
     <div class="faq-list reveal">
       <details><summary>Como consultar os produtos?</summary><div class="answer">Explore as coleções desta vitrine e entre em contato pelo Instagram <a href="https://www.instagram.com/luganascabides/" target="_blank" rel="noopener noreferrer">@luganascabides</a>. A equipe pode apresentar os produtos e orientar sua escolha.</div></details>
       <details><summary>Quais modelos estão disponíveis?</summary><div class="answer">Consulte a Luganas para conhecer os modelos, materiais e acabamentos disponíveis. As imagens desta vitrine são ilustrativas.</div></details>

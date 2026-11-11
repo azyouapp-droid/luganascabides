@@ -1,0 +1,62 @@
+<svg viewBox="0 0 1920 1200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Gradiente Base Creme Quente -->
+    <linearGradient id="creamBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDFBF7" />
+      <stop offset="50%" stop-color="#F8F4EC" />
+      <stop offset="100%" stop-color="#EFE9DE" />
+    </linearGradient>
+
+    <!-- Onda Arquitetônica Areia 1 -->
+    <linearGradient id="sandWave1" x1="0%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+      <stop offset="55%" stop-color="#F4EFE6" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#E4DACB" stop-opacity="0.55" />
+    </linearGradient>
+
+    <!-- Onda Arquitetônica Areia 2 -->
+    <linearGradient id="sandWave2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#F2ECE1" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#E0D5C3" stop-opacity="0.45" />
+    </linearGradient>
+
+    <!-- Brilho suave quente atrás do título -->
+    <radialGradient id="warmCenterGlow" cx="50%" cy="18%" r="42%">
+      <stop offset="0%" stop-color="#F47B42" stop-opacity="0.06" />
+      <stop offset="45%" stop-color="#E5C198" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#FAF7F2" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Filtros de Sombra Suave -->
+    <filter id="boutiqueShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="-10" stdDeviation="22" flood-color="#8C7A65" flood-opacity="0.07" />
+    </filter>
+    <filter id="boutiqueShadowDown" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="14" stdDeviation="24" flood-color="#8C7A65" flood-opacity="0.06" />
+    </filter>
+  </defs>
+
+  <!-- Fundo Base -->
+  <rect width="1920" height="1200" fill="url(#creamBase)" />
+
+  <!-- Luz Quente Central -->
+  <rect width="1920" height="1200" fill="url(#warmCenterGlow)" />
+
+  <!-- Curva Escultural Superior Esquerda -->
+  <path d="M-150 -80 L 780 -80 C 640 240, 320 460, -150 540 Z" fill="url(#sandWave1)" filter="url(#boutiqueShadowDown)" />
+  <path d="M-150 -80 L 520 -80 C 420 160, 180 310, -150 360 Z" fill="#FFFFFF" opacity="0.7" filter="url(#boutiqueShadowDown)" />
+
+  <!-- Dobra de Seda Diagonal Central/Inferior -->
+  <path d="M-200 880 C 420 960, 1080 580, 1980 180 L 2050 1280 L -200 1280 Z" fill="url(#sandWave2)" filter="url(#boutiqueShadow)" />
+
+  <!-- Segunda Camada Suave Inferior Direita -->
+  <path d="M350 1250 C 920 1020, 1450 740, 2020 480 L 2050 1250 Z" fill="url(#sandWave1)" filter="url(#boutiqueShadow)" />
+
+  <!-- Linhas Finas Arquitetônicas -->
+  <path d="M-100 590 C 380 510, 720 260, 880 -60" stroke="#D5C7B4" stroke-width="1.2" stroke-opacity="0.55" fill="none" />
+  <path d="M220 1240 C 860 980, 1420 640, 1960 320" stroke="#D5C7B4" stroke-width="1.2" stroke-opacity="0.5" fill="none" />
+
+  <!-- Moldura de Arco Minimalista ao Centro -->
+  <path d="M560 1200 L 560 440 C 560 220, 1360 220, 1360 440 L 1360 1200" stroke="#E2D9CC" stroke-width="1.5" stroke-opacity="0.6" fill="none" />
+</svg>

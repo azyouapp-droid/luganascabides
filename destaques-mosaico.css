@@ -1,0 +1,91 @@
+/* Prévia experimental dos Destaques, habilitada pelo link em index.html. */
+#destaques .section-heading {
+  text-align: center;
+  margin-bottom: clamp(26px, 4vw, 48px);
+}
+
+#destaques .section-heading > p {
+  margin-inline: auto;
+}
+
+#destaques .products {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, .86fr) minmax(0, 1fr);
+  grid-template-areas:
+    "ayo selene manequim"
+    "ayo bustos manequim";
+  grid-auto-rows: minmax(clamp(220px, 23vw, 270px), auto);
+  gap: clamp(12px, 2vw, 24px);
+}
+
+#destaques .product {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-width: 0;
+  border-radius: 8px;
+  background: #fcf9f4;
+  box-shadow: 0 4px 16px rgb(9 27 43 / 5%);
+}
+
+#destaques .product:nth-child(1) {
+  grid-area: ayo;
+  margin-top: 30px;
+}
+
+#destaques .product:nth-child(2) { grid-area: selene; }
+#destaques .product:nth-child(3) { grid-area: bustos; }
+
+#destaques .product:nth-child(4) {
+  grid-area: manequim;
+  margin-bottom: 30px;
+}
+
+#destaques .product-photo {
+  min-height: 0;
+  aspect-ratio: auto;
+  border-radius: 8px 8px 0 0;
+}
+
+#destaques .product-photo img {
+  position: absolute;
+  inset: 0;
+}
+
+#destaques .product:nth-child(3) .product-photo img {
+  object-position: center 18%;
+  transform-origin: center top;
+}
+
+#destaques .product-link {
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  padding: 9px clamp(9px, 1.5vw, 18px);
+}
+
+#destaques .product h3 {
+  margin: 0;
+  font-size: clamp(12px, 1.2vw, 16px);
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+#destaques .product-title-detail {
+  max-width: none;
+  text-wrap: inherit;
+}
+
+@media (max-width: 820px) {
+  #destaques .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "ayo selene"
+      "ayo manequim"
+      "bustos manequim";
+    grid-auto-rows: minmax(clamp(156px, 41vw, 245px), auto);
+  }
+
+  #destaques .product:nth-child(1),
+  #destaques .product:nth-child(4) {
+    margin: 0;
+  }
+}
