@@ -21,25 +21,6 @@
   margin-inline:auto;
 }
 
-.lug-relief {
-  position:absolute;
-  z-index:-1;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:50% 46%;
-  filter:grayscale(1);
-  opacity:.33;
-  pointer-events:none;
-}
-
-@media(max-width:740px) {
-  .lug-relief {
-    object-position:58% center;
-  }
-}
-
 .lug-stage {
   --side:20%;
   container-type:inline-size;
@@ -284,11 +265,14 @@
   background: var(--navy);
 }
 
-[data-tema="azul"] .lug-relief {
-  /* Relevo já tratado em azul, sem filtros em tempo real. */
-  filter: none;
-  mix-blend-mode: normal;
-  opacity: .08;
+[data-tema="azul"] .lug-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url('assets/hero-colecoes/fundo-hero.webp') center / cover no-repeat;
+  opacity: .1;
+  pointer-events: none;
 }
 
 [data-tema="azul"] .lug-wordmark {
@@ -320,15 +304,6 @@
 
 [data-tema="azul"] .lug-hero :focus-visible {
   outline-color:var(--orange);
-}
-
-.lug-hero::after {
-  content: '';
-  position: absolute;
-  z-index: 1;
-  inset: 12% 0 21%;
-  background: radial-gradient(ellipse at center, rgb(182 212 240 / 2%) 0%, rgb(182 212 240 / 1%) 32%, rgb(182 212 240 / .3%) 56%, transparent 78%);
-  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -379,10 +354,6 @@
 }
 
 @media (max-width: 740px) {
-  [data-tema="azul"] .lug-relief {
-    object-position: 35% center;
-  }
-
   .lug-card {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
