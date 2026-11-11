@@ -377,3 +377,10 @@
   .lug-hero .lug-card:nth-child(2) { --hero-entry-delay: 455ms; }
   .lug-hero .lug-card:nth-child(3) { --hero-entry-delay: 540ms; }
 }
+
+@media (max-width: 740px) {
+  .lug-card {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
