@@ -852,14 +852,14 @@ a.campaign {
 /* Movimento global: navegação nativa, inclusive pelo histórico. */
 @view-transition { navigation: auto; }
 ::view-transition-group(root) {
-  animation-duration: 360ms;
+  animation-duration: 220ms;
 }
 ::view-transition-old(root) {
   animation: none;
   mix-blend-mode: normal;
 }
 ::view-transition-new(root) {
-  animation: page-reveal 360ms cubic-bezier(.22,.7,.25,1) both;
+  animation: page-reveal 220ms cubic-bezier(.22,.7,.25,1) both;
   mix-blend-mode: normal;
 }
 @keyframes page-reveal {

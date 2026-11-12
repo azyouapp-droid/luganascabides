@@ -42,8 +42,8 @@ function cascadeText(container) {
       { opacity: 0, transform: 'translateY(14px)' },
       { opacity: 1, transform: 'translateY(0)' }
     ], {
-      duration: 620,
-      delay: 70 + Math.min(index, 5) * 110,
+      duration: 560,
+      delay: 35 + Math.min(index, 5) * 90,
       easing: 'cubic-bezier(.16,1,.3,1)',
       fill: 'backwards'
     });
@@ -128,6 +128,32 @@ document.addEventListener('focusin', event => {
 
 updateMotion();
 window.addEventListener('pageshow', closeMenu);
+
+// Antecipar apenas páginas internas apontadas pelo visitante acelera a troca
+// sem interferir no histórico nem no carregamento inicial.
+const prefetchedPages = new Set();
+const prefetchRoutes = new Set(['/inicio', '/cabides', '/bustos', '/manequins', '/expositores']);
+function prefetchPage(link) {
+  if (!link || link.target || link.hasAttribute('download') || navigator.connection?.saveData) return;
+  const url = new URL(link.href, location.href);
+  if (url.origin !== location.origin || !prefetchRoutes.has(url.pathname) || url.pathname === location.pathname) return;
+  url.hash = '';
+  if (prefetchedPages.has(url.href)) return;
+  prefetchedPages.add(url.href);
+  const hint = document.createElement('link');
+  hint.rel = 'prefetch';
+  hint.as = 'document';
+  hint.href = url.href;
+  document.head.append(hint);
+}
+document.addEventListener('pointerover', event => {
+  if (event.pointerType === 'mouse' || event.pointerType === 'pen') {
+    prefetchPage(event.target.closest?.('a[href]'));
+  }
+});
+document.addEventListener('focusin', event => {
+  if (event.target.matches?.(':focus-visible')) prefetchPage(event.target.closest?.('a[href]'));
+});
 
 document.querySelector('.header .brand')?.addEventListener('click', event => {
   if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
