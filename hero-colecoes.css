@@ -122,7 +122,7 @@
 }
 
 .lug-slide-cabides img {
-  scale: 1.04;
+  scale:1.04;
 }
 
 .lug-details {
@@ -176,6 +176,13 @@
   text-align:left;
 }
 
+.lug-card-image {
+  position:relative;
+  display:block;
+  width:100%;
+  height:66px;
+}
+
 .lug-card img {
   display:block;
   width:100%;
@@ -222,7 +229,7 @@
     min-height:68px;
     text-align:center;
   }
-  .lug-card img {
+  .lug-card-image, .lug-card img {
     height:clamp(36px,12vw,56px);
   }
 }
@@ -238,9 +245,6 @@
   .lug-slide {
     top:5%;
     bottom:78px;
-  }
-  .lug-slide-cabides img {
-    scale: 1.05;
   }
   .lug-phrase {
     top:auto;

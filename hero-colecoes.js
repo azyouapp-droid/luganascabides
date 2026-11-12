@@ -29,8 +29,11 @@
       const index = cardIndex(offset);
       const name = collections[index];
       card.setAttribute('aria-label', 'Exibir ' + name + ' na vitrine');
-      card.querySelector('span').textContent = name;
-      card.querySelector('img').src = `assets/hero-colecoes/${name}-thumb.webp`;
+      card.querySelector('.lug-card-label').textContent = name;
+      card.classList.toggle('lug-card-cabides', name === 'cabides');
+      card.querySelector('img').src = name === 'cabides'
+        ? 'assets/hero-colecoes/cabides-aprovar.webp'
+        : `assets/hero-colecoes/${name}-thumb.webp`;
     });
     upcoming.hidden = false;
   }
