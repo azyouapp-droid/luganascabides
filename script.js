@@ -73,6 +73,21 @@ function setRevealed(element, visible, animate = false) {
   if (!visible) cascadeRuns.get(copy)?.forEach(animation => animation.cancel());
 }
 
+// Ao ativar um banner, termina a entrada antes da navegação capturar a página.
+function stabilizeBanner(banner) {
+  const copy = banner.querySelector('.campaign-copy');
+  if (!copy) return;
+  copy.classList.add('banner-active');
+  cascadeRuns.get(copy)?.forEach(animation => animation.cancel());
+  cascadeRuns.delete(copy);
+}
+banners.forEach(banner => {
+  banner.addEventListener('pointerdown', () => stabilizeBanner(banner));
+  banner.addEventListener('keydown', event => {
+    if (event.key === 'Enter') stabilizeBanner(banner);
+  });
+});
+
 function updateMotion() {
   revealObserver?.disconnect();
   exitObserver?.disconnect();
