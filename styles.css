@@ -1097,7 +1097,7 @@ h2 > br + em {
   width: clamp(48px, 23%, 136px);
   transform: translate(-50%, -50%);
   aspect-ratio: 1;
-  background: url('assets/logo.webp') center / contain no-repeat;
+  background: url('assets/logo-320.webp') center / contain no-repeat;
   filter: brightness(0) invert(1) drop-shadow(0 1px 1px #0009);
   opacity: .26;
   pointer-events: none;

@@ -30,7 +30,7 @@
       const name = collections[index];
       card.setAttribute('aria-label', 'Exibir ' + name + ' na vitrine');
       card.querySelector('span').textContent = name;
-      card.querySelector('img').src = slides[index].querySelector('img').src;
+      card.querySelector('img').src = `assets/hero-colecoes/${name}-thumb.webp`;
     });
     upcoming.hidden = false;
   }
